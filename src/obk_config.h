@@ -41,6 +41,8 @@
 //#define ENABLE_LOG2LFS						1
 #endif
 
+#define ENABLE_DRIVER_ULTRAUART					1
+
 
 #if PLATFORM_XRADIO
 

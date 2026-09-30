@@ -25,6 +25,7 @@
 #include "drv_ds3231.h"
 #include "drv_hlw8112.h"
 #include "drv_DCF77.h"
+#include "drv_ultrauart.h"
 
 void DRV_MQTTServer_Init();
 void DRV_MQTTServer_AppendInformationToHTTPIndexPage(http_request_t *request, int bPreState);
@@ -51,6 +52,23 @@ void GirierMCU_RunEverySecond();
 
 // startDriver BL0937
 static driver_t g_drivers[] = {
+#if ENABLE_DRIVER_ULTRAUART
+	//drvdetail:{"name":"UltraUART",
+	//drvdetail:"title":"TODO",
+	//drvdetail:"descr":"Reads an ultrasonic sensor with a custom UART protocol (RX1/TX1, 9600 baud) and stores the value in channel 1.",
+	//drvdetail:"requires":""}
+	{ "UltraUART",                           // Driver Name
+	UltraUART_Init,                          // Init
+	UltraUART_RunEverySecond,                // onEverySecond
+	UltraUART_AppendInformationToHTTPIndexPage, // appendInformationToHTTPIndexPage
+	UltraUART_RunQuickTick,                  // runQuickTick
+	NULL,                                    // stopFunction
+	NULL,                                    // onChannelChanged
+	NULL,                                    // onHassDiscovery
+	false,                                   // loaded
+	},
+#endif
+
 #if ENABLE_DRIVER_TUYAMCU
 	//drvdetail:{"name":"TuyaMCU",
 	//drvdetail:"title":"TODO",
